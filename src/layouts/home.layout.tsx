@@ -9,7 +9,6 @@ import { useAutoScroll } from "../hooks/useAutoScroll";
 export default function HomeLayout() {
   const scrollRef = useAutoScroll();
 
-  //
   return (
     <div className="flex h-screen overflow-hidden">
 
@@ -37,3 +36,4 @@ export default function HomeLayout() {
     </div>
   );
 }
+

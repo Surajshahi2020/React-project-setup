@@ -1,52 +1,66 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FaStar, FaTrophy, FaUser } from "react-icons/fa";
+import { IoGameController, IoLogOutOutline } from "react-icons/io5";
 import { useAuthStore } from "../../stores/auth";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const user = useAuthStore((state) => state.user);
-
-  // Sidebar menu items
+  const logout = useAuthStore((state) => state.logout);
+  const logoutUser = () => {
+    logout();
+    navigate("/");
+  };
   const sidebarItems = [
-    { name: "Games", icon: "🎮", link: "/games" },
-    { name: "Favorites", icon: "⭐", link: "/games/favorites", requiredAuth: true },
-    { name: "Profile", icon: "👤", link: "/profile", requiredAuth: true },
-    { name: "Off-market Games", icon: "🏆", link: "/off-market-games" },
+    {
+      name: "Games",
+      icon: <IoGameController size={20} />,
+      link: "/games"
+    },
+    {
+      name: "Favorite",
+      icon: <FaStar size={20} />,
+      link: "/games/favorites",
+      requiredAuth: true,
+    },
+    {
+      name: "Profile",
+      icon: <FaUser size={20} />,
+      link: "/profile",
+      requiredAuth: true,
+    },
+    {
+      name: "Off-market Games",
+      icon: <FaTrophy size={20} />,
+      link: "/off-market-games",
+    },
   ];
-
-  // Filter items based on authentication
   const finalSidebarItems = sidebarItems.filter((item) =>
     item.requiredAuth ? !!user : true
   );
-
-  // Logout function
-  const logoutUser = () => {
-    // Clear user from Zustand store
-    useAuthStore.setState({ user: null, token: null });
-    navigate("/");
-  };
-
   return (
-    <aside className="flex h-full w-64 flex-shrink-0 flex-col bg-blue-900 text-white">
-      {/* Logo */}
-      <div className="flex h-16 items-center p-4">
-        <Link to="/">
+    <aside className="h-full w-72 flex-shrink-0 flex-col bg-gradient-to-b from-blue-900 to-blue-950 text-white shadow-xl">
+      {/* Header with logo */}
+      <div className="flex h-16 items-center px-6 border-blue-800">
+        <Link to="/" className="flex h-full items-center">
           <img src="/images/logo.png" alt="logo" width={100} />
         </Link>
       </div>
 
-      {/* Menu */}
-      <nav className="flex flex-col flex-1 gap-1 overflow-y-auto px-2 py-4">
+      {/* Menu items */}
+      <nav className="flex-grow overflow-y-auto px-3 py-6 space-y-1">
         {finalSidebarItems.map((item, index) => {
           const isActive = location.pathname === item.link;
+
           return (
             <Link key={index} to={item.link}>
               <div
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-colors duration-200 cursor-pointer
-                  ${isActive ? "bg-blue-700 font-semibold" : "hover:bg-blue-800"}`}
+                className={`flex items-center gap-3 rounded-lg px-3 py-3 transition-all duration-200
+                  ${isActive ? "bg-blue-700 border-l-4 border-white" : "hover:bg-blue-800"}`}
               >
-                <span className="text-lg">{item.icon}</span>
-                <span>{item.name}</span>
+                <span className="w-6 flex justify-center">{item.icon}</span>
+                <span className="font-light">{item.name}</span>
               </div>
             </Link>
           );
@@ -55,12 +69,12 @@ export default function Sidebar() {
 
       {/* Logout */}
       {user && (
-        <div className="p-4">
+        <div className="border-t border-blue-800 p-3">
           <button
-            className="flex w-full items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-white transition-colors duration-200 hover:bg-red-700"
             onClick={logoutUser}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-3 bg-red-600 hover:bg-red-700 transition"
           >
-            <span>🚪</span>
+            <IoLogOutOutline size={20} />
             <span>Logout</span>
           </button>
         </div>
