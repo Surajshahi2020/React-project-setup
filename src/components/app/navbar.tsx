@@ -15,7 +15,7 @@ export default function Navbar({ showLogo = false }: NavbarProps) {
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
-    await logout(); // optional async logout
+    await logout();
     navigate("/");
     setIsLoggingOut(false);
   };
@@ -24,14 +24,16 @@ export default function Navbar({ showLogo = false }: NavbarProps) {
     <nav className="bg-gradient-to-r from-blue-900 to-blue-950 border-b border-blue-800 shadow-xl">
       <div className="mx-auto flex h-16 items-center justify-between px-6">
         {/* Left: Logo if showLogo is true */}
-        {showLogo && (
-          <Link to="/" className="flex items-center">
-            <img src="/images/logo.png" alt="Logo" className="h-10 w-auto" />
-          </Link>
-        )}
+        <div className="flex items-center">
+          {showLogo && (
+            <Link to="/" className="flex items-center">
+              <img src="/images/logo.png" alt="Logo" className="h-10 w-auto" />
+            </Link>
+          )}
+        </div>
 
-        {/* Right: User info / buttons */}
-        <div className="flex items-center gap-4">
+        {/* Right: always sticks to right */}
+        <div className="flex items-center gap-4 ml-auto">
           {user ? (
             <>
               {/* User info */}
