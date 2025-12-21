@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../reusable/button";
+import Button from "../reusable/Button";
 import { useAuthStore } from "../../stores/auth";
 
 export default function Navbar() {
