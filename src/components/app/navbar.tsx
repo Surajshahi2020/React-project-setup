@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "../reusable/Button";
 import { useAuthStore } from "../../stores/auth";
 
-export default function Navbar() {
+interface NavbarProps {
+  showLogo?: boolean;
+}
+
+export default function Navbar({ showLogo = false }: NavbarProps) {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
@@ -18,7 +22,15 @@ export default function Navbar() {
 
   return (
     <nav className="bg-gradient-to-r from-blue-900 to-blue-950 border-b border-blue-800 shadow-xl">
-      <div className="mx-auto flex h-16 items-center justify-end px-6">
+      <div className="mx-auto flex h-16 items-center justify-between px-6">
+        {/* Left: Logo if showLogo is true */}
+        {showLogo && (
+          <Link to="/" className="flex items-center">
+            <img src="/images/logo.png" alt="Logo" className="h-10 w-auto" />
+          </Link>
+        )}
+
+        {/* Right: User info / buttons */}
         <div className="flex items-center gap-4">
           {user ? (
             <>
@@ -33,10 +45,10 @@ export default function Navbar() {
               {/* Logout button */}
               <Button
                 onClick={handleLogout}
-                variant="danger"    // red color
+                variant="danger"
                 size="medium"
                 rounded="medium"
-                isLoading={isLoggingOut} // shows spinner
+                isLoading={isLoggingOut}
               >
                 Logout
               </Button>
@@ -56,7 +68,7 @@ export default function Navbar() {
               {/* Register button */}
               <Button
                 size="small"
-                variant="primary"   // fixed variant
+                variant="primary"
                 rounded="medium"
                 onClick={() => navigate("/register")}
               >
