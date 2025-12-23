@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../stores/auth"; // adjust path if needed
+import LoggedInFooter from "./LoggedInFooter";
 
 // Social Media Icons
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa6";
 
 export default function Footer() {
+  const user = useAuthStore((state) => state.user);
+
+  if (user) return <LoggedInFooter/>;
+  
   return (
     <footer className="bg-gradient-to-r from-blue-900 to-blue-950 text-white shadow-xl border-t border-blue-800">
       <div className="px-3 md:px-5 lg:px-7">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "../reusable/Button";
 import { useAuthStore } from "../../stores/auth";
+import LoggedInNavbar from "./LoggedInNavbar";
 
 interface NavbarProps {
   showLogo?: boolean;
@@ -19,6 +20,9 @@ export default function Navbar({ showLogo = false }: NavbarProps) {
     navigate("/");
     setIsLoggingOut(false);
   };
+
+  if (user) return <LoggedInNavbar />;
+  
 
   return (
     <nav className="bg-gradient-to-r from-blue-900 to-blue-950 border-b border-blue-800 shadow-xl">
@@ -39,9 +43,9 @@ export default function Navbar({ showLogo = false }: NavbarProps) {
               {/* User info */}
               <div className="flex items-center gap-3 rounded-lg border border-blue-700 bg-blue-800/50 px-4 py-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-sm font-bold text-white">
-                  {user.name?.charAt(0).toUpperCase() || "U"}
+                  {user}
                 </div>
-                <span className="font-medium text-white">{user.name}</span>
+                <span className="font-medium text-white">{user}</span>
               </div>
 
               {/* Logout button */}

@@ -4,6 +4,7 @@ import HomePage from "./pages/home";
 import PublicLayout from "./layouts/public.layout";
 import LoginPage from "./pages/authentication/login";
 import RegisterPage from "./pages/authentication/register";
+import DashboardPage from "./pages/homePage/dashboard";
 import HomeLayout from "./layouts/home.layout";
 import PageNotFound from "./pages/404";
 import SessionLayout from "./layouts/Session.Layout";
@@ -20,6 +21,15 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <HomePage />,
+          },
+          {
+            path: "/dashboard",
+            children: [
+              {
+                path: "/dashboard",
+                element: <DashboardPage />,
+              },
+            ],
           },
         ],
       },
