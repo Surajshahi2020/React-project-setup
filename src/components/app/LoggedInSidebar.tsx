@@ -1,36 +1,65 @@
-// components/LoggedInSidebar.tsx
-import { IoLogOutOutline } from "react-icons/io5";
-import { useAuthStore } from "../../stores/auth";
+// components/Sidebar.tsx
+import React from 'react';
+import { IconRButton } from '../reusable/IconButton';
 
-export default function LoggedInSidebar() {
-  const logout = useAuthStore((state) => state.logout);
-
-  const logoutUser = () => {
-    logout();
-  };
+const Sidebar: React.FC = () => {
+  const menuItems = [
+    { text: 'Sweepstakes', imageIcon: '🎮', bgImage: '/images/logo.png' },
+    { text: 'Purchase', imageIcon: '💰', bgImage: '/images/money-1.jpg' },
+    { text: 'Cashout', imageIcon: '↔️', bgImage: '/images/jw.jpg' },
+    { text: 'Transfer Funds', imageIcon: '🎁', bgImage: '/images/money-1.jpg' },
+    { text: 'Promotions', imageIcon: '🎮', bgImage: '/images/dealer-1.jpg' },
+    { text: 'Games', imageIcon: '🎮' },
+    { text: 'Roulette', imageIcon: '🎲' },
+  ];
 
   return (
-    <aside className="w-64 bg-[#111827] p-4 flex flex-col gap-4 h-full">
-      <div className="text-xl font-bold mb-4">🐼 Skyline</div>
-
-      <button className="sidebar-btn bg-blue-600">Sweepstakes</button>
-      <button className="sidebar-btn bg-green-600">Purchase</button>
-      <button className="sidebar-btn bg-orange-500">Cashout</button>
-      <button className="sidebar-btn bg-pink-600">Transfer Funds</button>
-      <button className="sidebar-btn bg-purple-600">Promotions</button>
-
-      <div className="mt-auto space-y-2">
-        <div className="bg-green-700 p-3 rounded-lg text-sm">
-          🎁 Earn Bonus <br /> Free SC 100
+    <div className="fixed w-[266px] h-[679px] top-[93px] left-[73px] rounded-[16px] bg-black flex flex-col justify-between p-4">
+      <div>
+        {/* Menu Items */}
+        <div className="flex flex-col gap-2">
+          {menuItems.map((item, index) => (
+            <IconRButton
+              key={index}
+              imageIcon={item.imageIcon}
+              text={item.text}
+              bgImage={item.bgImage}
+              size="md"
+              className="!justify-start !rounded-lg !px-3 !py-2.5 hover:!scale-[1.02] transition-transform"
+            />
+          ))}
         </div>
-        <button
-          onClick={logoutUser}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-3 bg-red-600 hover:bg-red-700 transition"
-        >
-          <IoLogOutOutline size={20} />
-          <span>Logout</span>
-        </button>
+
+        <div className="h-24"></div>
+
+        {/* First button */}
+        <div className="mb-3">
+          <IconRButton 
+            text="Weekly"
+            text2="Challenge"
+            leftBgColor="bg-green-600"
+            bgImage='/images/dealer-1.jpg'
+            reverse={true}
+            size="md"
+            className="!rounded-lg !px-4 !py-3 hover:!scale-[1.02] transition-transform !h-14"
+          />
+        </div>
+
+        {/* Second button */}
+        <div className="mb-6">
+          <IconRButton
+            text="Earn Bonus"
+            text2="Free SC 100"
+            leftBgColor="bg-orange-500"
+            bgImage='/images/money-1.jpg'
+            reverse={true}
+            size="md"
+            className="!rounded-lg !px-4 !py-3 hover:!scale-[1.02] transition-transform !h-14"
+          />
+        </div>
       </div>
-    </aside>
+    </div>
   );
-}
+};
+
+export default Sidebar;

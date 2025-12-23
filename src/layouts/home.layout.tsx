@@ -3,19 +3,17 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../components/app/navbar";
 import Footer from "../components/app/footer";
 import Sidebar from "../components/app/sidebar";
-import { useAuthStore } from "../stores/auth"; // adjust path if needed
-
-
+import { useAuthStore } from "../stores/auth";
 import { useAutoScroll } from "../hooks/useAutoScroll";
 
 export default function HomeLayout() {
   const user = useAuthStore((state) => state.user);
-  
   const scrollRef = useAutoScroll();
 
   return (
-    <div className="flex h-screen overflow-hidden">
-
+    <div className={`flex h-screen overflow-hidden ${user ? "bg-black" : ""}`}>
+      {/* If user is logged in, background is black, otherwise no background class */}
+      
       <div className="hidden lg:block">
         <Sidebar />
       </div>
@@ -27,19 +25,15 @@ export default function HomeLayout() {
           ref={scrollRef}
           className="flex flex-grow flex-col overflow-y-auto overflow-x-clip"
         >
-
-           <div
-            className={`flex-grow ${user ? "bg-black text-white" : ""} p-6`}
-          >
+          <div className={`flex-grow ${user ? "bg-black text-white" : ""} p-6`}>
             <Outlet />
           </div>
           
-          <Footer />
+          <div className="px-6 pb-6">
+            <Footer />
+          </div>
         </div>
-
       </div>
-
     </div>
   );
 }
-
